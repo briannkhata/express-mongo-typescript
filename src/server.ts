@@ -4,6 +4,7 @@ import http from 'http';
 import mongoose from 'mongoose';
 import Logging from './library/Logging';
 import authorRoutes from './routes/Author';
+import bookRoutes from './routes/Book';
 const router = express();
 
 /** Connect to Database **/
@@ -35,6 +36,7 @@ const StartServer = () => {
     /** Routes**/
 
     router.use('/authors', authorRoutes);
+    router.use('/books', bookRoutes);
 
     /** Healthcheck**/
 

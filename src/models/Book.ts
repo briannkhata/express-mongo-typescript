@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IBook {
-    name: string;
+    title: string;
     author: string;
 }
 
@@ -22,8 +22,7 @@ const BookSchema: Schema = new Schema(
     },
 
     {
-        timestamps: true,
-        versionKey: false
+        timestamps: true
     }
 );
 

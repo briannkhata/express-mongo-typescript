@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 import Book from '../models/Book';
 
 const createBook = (req: Request, res: Response, next: NextFunction) => {
-    const { name, author } = req.body;
+    const { title, author } = req.body;
 
     const book = new Book({
         _id: new mongoose.Types.ObjectId(),
-        name,
+        title,
         author
     });
 
@@ -20,12 +20,16 @@ const createBook = (req: Request, res: Response, next: NextFunction) => {
 const readBook = (req: Request, res: Response, next: NextFunction) => {
     const bookId = req.params.bookId;
     return Book.findById(bookId)
+        .populate('author')
+        .select('-_v') //do not select the fields with _
         .then((book) => (book ? res.status(201).json({ book }) : res.status(404).json({ message: 'Not Found' })))
         .catch((error) => res.status(500).json({ error }));
 };
 
 const readAll = (req: Request, res: Response, next: NextFunction) => {
     return Book.find()
+        .populate('author')
+        .select('-_v') //do not select the fields with _
         .then((books) => (books ? res.status(201).json({ books }) : res.status(404).json({ message: 'Not Found' })))
         .catch((error) => res.status(500).json({ error }));
 };
